@@ -18,6 +18,7 @@
 		E47DD5FC174B08C3006F1C83 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E47DD5FB174B08C3006F1C83 /* Default-568h@2x.png */; };
 		E47DD5FF174B08C3006F1C83 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E47DD5FE174B08C3006F1C83 /* ViewController.m */; };
 		E47DD602174B08C3006F1C83 /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E47DD600174B08C3006F1C83 /* ViewController.xib */; };
+		E47DD60B174B0936006F1C83 /* UIXCurrencyTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = E47DD60A174B0936006F1C83 /* UIXCurrencyTextField.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +38,8 @@
 		E47DD5FD174B08C3006F1C83 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		E47DD5FE174B08C3006F1C83 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		E47DD601174B08C3006F1C83 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ViewController.xib; sourceTree = "<group>"; };
+		E47DD609174B0936006F1C83 /* UIXCurrencyTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIXCurrencyTextField.h; sourceTree = "<group>"; };
+		E47DD60A174B0936006F1C83 /* UIXCurrencyTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIXCurrencyTextField.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +59,7 @@
 		E47DD5D9174B08C3006F1C83 = {
 			isa = PBXGroup;
 			children = (
+				E47DD608174B0936006F1C83 /* UIXCurrencyTextField */,
 				E47DD5EB174B08C3006F1C83 /* UIXCurrencyTextFieldDemo */,
 				E47DD5E4174B08C3006F1C83 /* Frameworks */,
 				E47DD5E3174B08C3006F1C83 /* Products */,
@@ -105,6 +109,15 @@
 				E47DD5FB174B08C3006F1C83 /* Default-568h@2x.png */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		E47DD608174B0936006F1C83 /* UIXCurrencyTextField */ = {
+			isa = PBXGroup;
+			children = (
+				E47DD609174B0936006F1C83 /* UIXCurrencyTextField.h */,
+				E47DD60A174B0936006F1C83 /* UIXCurrencyTextField.m */,
+			);
+			path = UIXCurrencyTextField;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -176,6 +189,7 @@
 				E47DD5F2174B08C3006F1C83 /* main.m in Sources */,
 				E47DD5F6174B08C3006F1C83 /* AppDelegate.m in Sources */,
 				E47DD5FF174B08C3006F1C83 /* ViewController.m in Sources */,
+				E47DD60B174B0936006F1C83 /* UIXCurrencyTextField.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -298,6 +312,7 @@
 				E47DD607174B08C3006F1C83 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
