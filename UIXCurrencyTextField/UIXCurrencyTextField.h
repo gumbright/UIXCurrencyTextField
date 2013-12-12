@@ -12,6 +12,7 @@
 
 @protocol UIXCurrencyTextFieldDelegate
 
+//return YES if editing should stop
 - (BOOL)currencyTextFieldShouldEndEditing:(UIXCurrencyTextField *)currencyTextField;
 
 @end
@@ -22,6 +23,8 @@
 @property (nonatomic, retain) UIColor* backgroundColor;
 @property (nonatomic, retain) UIFont* font;
 @property (nonatomic, assign) CGFloat caretWidth;
+
+@property (nonatomic, strong) UIView* fieldInputAccessoryView;
 
 //@property (nonatomic, assign) NSDecimalNumber* value;
 @property (nonatomic, assign) float value;

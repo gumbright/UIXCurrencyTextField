@@ -393,4 +393,20 @@
     NSDecimalNumber *roundedDecimalNumber = [decimalNumber decimalNumberByRoundingAccordingToBehavior:roundingBehavior];
     return roundedDecimalNumber;
 }
+
+/////////////////////////////////////////////////////
+//
+/////////////////////////////////////////////////////
+- (UIView*) fieldInputAccessoryView
+{
+    return _entryField.inputAccessoryView;
+}
+
+/////////////////////////////////////////////////////
+//
+/////////////////////////////////////////////////////
+- (void) setFieldInputAccessoryView:(UIView *)inputAccessoryView
+{
+    self.entryField.inputAccessoryView = inputAccessoryView;
+}
 @end
