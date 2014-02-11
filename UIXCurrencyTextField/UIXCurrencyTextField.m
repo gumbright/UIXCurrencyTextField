@@ -42,7 +42,7 @@
     
     self.display = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.bounds.size.width-10, self.bounds.size.height)];
     self.display.backgroundColor = [UIColor clearColor];
-    self.display.textColor = [UIColor blackColor];
+    self.display.textColor = (self.textColor) ? :[UIColor blackColor];
     self.display.userInteractionEnabled = YES;
     self.display.textAlignment = NSTextAlignmentRight;
     self.display.adjustsFontSizeToFitWidth = YES;
