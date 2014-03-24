@@ -26,7 +26,7 @@
 ////////////////////////////////////////////////////////////
 - (void) commonInitialization
 {
-    self.entryField = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height)];
+    self.entryField = [[UITextField alloc] initWithFrame:CGRectZero];
     self.entryField.delegate = self;
     self.entryField.keyboardType =  UIKeyboardTypeNumberPad;
     self.entryField.hidden = YES;
@@ -125,6 +125,124 @@
 }
 */
 
+#pragma mark UITextFieldDelegate methods
+
+////////////////////////////////////////////////////////////
+//
+////////////////////////////////////////////////////////////
+- (void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    self.blinkyTimer = [NSTimer scheduledTimerWithTimeInterval:0.5
+                                                        target:self
+                                                      selector:@selector(handleBlinky:)
+                                                      userInfo:nil
+                                                       repeats:YES];
+}
+
+/////////////////////////////////////////////////////
+//
+/////////////////////////////////////////////////////
+- (BOOL)textFieldShouldEndEditing:(UITextField *)textField
+{
+    BOOL result = YES;
+    if ([self.delegate respondsToSelector:@selector(currencyTextFieldShouldEndEditing:)])
+    {
+        result = [self.delegate currencyTextFieldShouldEndEditing:self];
+    }
+    return result;
+}
+
+#pragma mark attributes
+
+////////////////////////////////////////////////////////////
+//
+////////////////////////////////////////////////////////////
+- (float) value
+{
+    return self.currentValue;
+}
+
+////////////////////////////////////////////////////////////
+//
+////////////////////////////////////////////////////////////
+- (void) setValue:(float)inputValue
+{
+    NSString* floatString = [NSString stringWithFormat:@"%f",inputValue];
+    NSDecimalNumberHandler *roundingBehavior = [NSDecimalNumberHandler decimalNumberHandlerWithRoundingMode:NSRoundPlain
+                                                                                                      scale:[self.formatter maximumFractionDigits]
+                                                                                           raiseOnExactness:FALSE
+                                                                                            raiseOnOverflow:TRUE
+                                                                                           raiseOnUnderflow:TRUE
+                                                                                        raiseOnDivideByZero:TRUE];
+    
+    [self.formatter setNumberStyle:NSNumberFormatterNoStyle];
+    NSNumber* n = [self.formatter numberFromString:floatString];
+    [self.formatter setNumberStyle:NSNumberFormatterCurrencyStyle];
+    NSDecimalNumber *decimalNumber = [NSDecimalNumber decimalNumberWithDecimal:[n decimalValue]];
+    
+    NSDecimalNumber *roundedDecimalNumber = [decimalNumber decimalNumberByRoundingAccordingToBehavior:roundingBehavior];
+    
+    NSDecimalNumber* scale = [NSDecimalNumber decimalNumberWithDecimal:[[NSNumber numberWithInt:10] decimalValue]];
+    scale = [scale decimalNumberByRaisingToPower:[self.formatter maximumFractionDigits]];
+    NSDecimalNumber* num = [roundedDecimalNumber decimalNumberByMultiplyingBy:scale];
+    
+    self.entryField.text = [num stringValue];
+    [self updateCurrentValue];
+    [self updateDisplay];
+}
+
+
+////////////////////////////////////////////////////////////
+//
+////////////////////////////////////////////////////////////
+- (void) setTextColor:(UIColor *)textColor
+{
+    if (_textColor == textColor) return;
+    
+    _textColor = textColor;
+    self.display.textColor = _textColor;
+    self.blinky.backgroundColor = _textColor;
+}
+
+////////////////////////////////////////////////////////////
+//
+////////////////////////////////////////////////////////////
+- (void) setBackgroundColor:(UIColor *)backgroundColor
+{
+    if (_backgroundColor == backgroundColor) return;
+    
+    _backgroundColor = backgroundColor;
+    self.display.backgroundColor = _backgroundColor;
+}
+
+////////////////////////////////////////////////////////////
+//
+////////////////////////////////////////////////////////////
+- (void) setFont:(UIFont *)font
+{
+    if (_font == font) return;
+    
+    _font = font;
+    self.display.font = _font;
+}
+
+/////////////////////////////////////////////////////
+//
+/////////////////////////////////////////////////////
+- (UIView*) fieldInputAccessoryView
+{
+    return _entryField.inputAccessoryView;
+}
+
+/////////////////////////////////////////////////////
+//
+/////////////////////////////////////////////////////
+- (void) setFieldInputAccessoryView:(UIView *)inputAccessoryView
+{
+    self.entryField.inputAccessoryView = inputAccessoryView;
+}
+
+
 ////////////////////////////////////////////////////////////
 //
 ////////////////////////////////////////////////////////////
@@ -181,102 +299,6 @@
     
 }
 
-////////////////////////////////////////////////////////////
-//
-////////////////////////////////////////////////////////////
-- (float) value
-{
-    return self.currentValue;
-}
-
-////////////////////////////////////////////////////////////
-//
-////////////////////////////////////////////////////////////
-- (void) setValue:(float)inputValue
-{
-    NSString* floatString = [NSString stringWithFormat:@"%f",inputValue];
-    NSDecimalNumberHandler *roundingBehavior = [NSDecimalNumberHandler decimalNumberHandlerWithRoundingMode:NSRoundPlain 
-                                                                                                      scale:[self.formatter maximumFractionDigits] 
-                                                                                           raiseOnExactness:FALSE 
-                                                                                            raiseOnOverflow:TRUE 
-                                                                                           raiseOnUnderflow:TRUE 
-                                                                                        raiseOnDivideByZero:TRUE]; 
-    
-    [self.formatter setNumberStyle:NSNumberFormatterNoStyle];
-    NSNumber* n = [self.formatter numberFromString:floatString];
-    [self.formatter setNumberStyle:NSNumberFormatterCurrencyStyle];
-    NSDecimalNumber *decimalNumber = [NSDecimalNumber decimalNumberWithDecimal:[n decimalValue]];
-
-    NSDecimalNumber *roundedDecimalNumber = [decimalNumber decimalNumberByRoundingAccordingToBehavior:roundingBehavior];
-    
-    NSDecimalNumber* scale = [NSDecimalNumber decimalNumberWithDecimal:[[NSNumber numberWithInt:10] decimalValue]];
-    scale = [scale decimalNumberByRaisingToPower:[self.formatter maximumFractionDigits]];
-    NSDecimalNumber* num = [roundedDecimalNumber decimalNumberByMultiplyingBy:scale];
-   
-    self.entryField.text = [num stringValue];
-    [self updateCurrentValue];
-    [self updateDisplay];
-}
-
-
-////////////////////////////////////////////////////////////
-//
-////////////////////////////////////////////////////////////
-- (void) setTextColor:(UIColor *)textColor
-{
-    if (_textColor == textColor) return;
-    
-    _textColor = textColor;
-    self.display.textColor = _textColor;
-    self.blinky.backgroundColor = _textColor;
-}
-
-////////////////////////////////////////////////////////////
-//
-////////////////////////////////////////////////////////////
-- (void) setBackgroundColor:(UIColor *)backgroundColor
-{
-    if (_backgroundColor == backgroundColor) return;
-    
-    _backgroundColor = backgroundColor;
-    self.display.backgroundColor = _backgroundColor;
-}
-
-////////////////////////////////////////////////////////////
-//
-////////////////////////////////////////////////////////////
-- (void) setFont:(UIFont *)font
-{
-    if (_font == font) return;
-    
-    _font = font;
-    self.display.font = _font;
-}
-
-////////////////////////////////////////////////////////////
-//
-////////////////////////////////////////////////////////////
-- (void)textFieldDidBeginEditing:(UITextField *)textField
-{    
-        self.blinkyTimer = [NSTimer scheduledTimerWithTimeInterval:0.5 
-                                                       target:self
-                                                     selector:@selector(handleBlinky:) 
-                                                     userInfo:nil 
-                                                      repeats:YES];
-}
-
-/////////////////////////////////////////////////////
-//
-/////////////////////////////////////////////////////
-- (BOOL)textFieldShouldEndEditing:(UITextField *)textField
-{
-    BOOL result = YES;
-    if ([self.delegate respondsToSelector:@selector(currencyTextFieldShouldEndEditing:)])
-    {
-        result = [self.delegate currencyTextFieldShouldEndEditing:self];
-    }
-    return result;
-}
 
 ////////////////////////////////////////////////////////////
 //
@@ -397,16 +419,17 @@
 /////////////////////////////////////////////////////
 //
 /////////////////////////////////////////////////////
-- (UIView*) fieldInputAccessoryView
+- (void) layoutIfNeeded
 {
-    return _entryField.inputAccessoryView;
+    [super layoutIfNeeded];
 }
 
 /////////////////////////////////////////////////////
 //
 /////////////////////////////////////////////////////
-- (void) setFieldInputAccessoryView:(UIView *)inputAccessoryView
+- (void) layoutSubviews
 {
-    self.entryField.inputAccessoryView = inputAccessoryView;
+    self.entryField.frame = self.bounds;
+    self.display.frame = self.bounds;
 }
 @end
