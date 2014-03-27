@@ -6,6 +6,8 @@
 //  Copyright 2011 Kickstand Software. All rights reserved.
 //
 
+static NSNumberFormatter* gFormatter = nil;
+
 #import "UIXCurrencyTextField.h"
 
 @interface UIXCurrencyTextField ()
@@ -14,7 +16,7 @@
 
 @property (nonatomic, strong) UITextField* entryField;
 @property (nonatomic, strong) UILabel* display;
-@property (nonatomic, strong) NSNumberFormatter* formatter;
+@property (nonatomic, readonly) NSNumberFormatter* formatter;
 @property (nonatomic, strong) UIView* blinky;
 @property (nonatomic, strong) NSTimer* blinkyTimer;
 @end
@@ -26,60 +28,54 @@
 ////////////////////////////////////////////////////////////
 - (void) commonInitialization
 {
+    self.caretWidth = 3;
+
     self.entryField = [[UITextField alloc] initWithFrame:CGRectZero];
     self.entryField.delegate = self;
     self.entryField.keyboardType =  UIKeyboardTypeNumberPad;
     self.entryField.hidden = YES;
-    [[NSNotificationCenter defaultCenter] addObserver:self 
+    [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(editValueChanged:) 
                                                  name:UITextFieldTextDidChangeNotification 
                                                object:self.entryField];
-    
     [self addSubview:self.entryField];
-#if !(__has_feature(objc_arc))
-    [entryField release];
-#endif
     
-    self.display = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.bounds.size.width-10, self.bounds.size.height)];
+    self.display = [[UILabel alloc] initWithFrame:CGRectZero];
     self.display.backgroundColor = [UIColor clearColor];
     self.display.textColor = (self.textColor) ? :[UIColor blackColor];
     self.display.userInteractionEnabled = YES;
     self.display.textAlignment = NSTextAlignmentRight;
     self.display.adjustsFontSizeToFitWidth = YES;
-    self.display.minimumFontSize = 13.0;
+    
     [self addSubview:self.display];
-#if !(__has_feature(objc_arc))
-    [display release];
-#endif
     
     UITapGestureRecognizer* gr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapped:)];
     
     gr.numberOfTapsRequired = 1;
     gr.numberOfTouchesRequired = 1;
     [self.display addGestureRecognizer:gr];
-#if !(__has_feature(objc_arc))
-    [gr release];
-#endif
     
-    self.blinky = [[UIView alloc] initWithFrame:CGRectMake(self.bounds.size.width-10, 5, 5, self.bounds.size.height-10)];
+    self.blinky = [[UIView alloc] initWithFrame:CGRectMake(self.bounds.size.width-10, 5, self.caretWidth, self.bounds.size.height-10)];
     self.blinky.backgroundColor = self.display.textColor;
     self.blinky.hidden = 1.0;
     [self addSubview:self.blinky];
-#if !(__has_feature(objc_arc))
-    [blinky release];
-#endif
-    
-    self.formatter = [[NSNumberFormatter alloc] init];
-    self.formatter.numberStyle = NSNumberFormatterCurrencyStyle;
     
     self.display.text = [self.formatter stringFromNumber:[NSNumber numberWithFloat:0.0]];
+    [self setNeedsDisplay];
+}
+
+/////////////////////////////////////////////////////
+//
+/////////////////////////////////////////////////////
+- (NSNumberFormatter*) formatter
+{
+    if (!gFormatter)
+    {
+        gFormatter = [[NSNumberFormatter alloc] init];
+        gFormatter.numberStyle = NSNumberFormatterCurrencyStyle;
+    }
     
-    self.caretWidth = 10;
-//    NSLog(@"min=%u max=%u",formatter.minimumFractionDigits,formatter.maximumFractionDigits);
-    
-//    currentValueString = [[NSMutableString alloc] init];
-    
-    //initialize values
+    return gFormatter;
 }
 
 ////////////////////////////////////////////////////////////
@@ -109,11 +105,6 @@
 - (void) dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-//    [currentValueString release];
-#if !(__has_feature(objc_arc))
-    [formatter release];
-    [super dealloc];
-#endif
 }
 
 /*
@@ -195,25 +186,25 @@
 ////////////////////////////////////////////////////////////
 //
 ////////////////////////////////////////////////////////////
-- (void) setTextColor:(UIColor *)textColor
-{
-    if (_textColor == textColor) return;
-    
-    _textColor = textColor;
-    self.display.textColor = _textColor;
-    self.blinky.backgroundColor = _textColor;
-}
+//- (void) setTextColor:(UIColor *)textColor
+//{
+//    if (_textColor == textColor) return;
+//    
+//    _textColor = textColor;
+//    self.display.textColor = _textColor;
+//    self.blinky.backgroundColor = _textColor;
+//}
 
 ////////////////////////////////////////////////////////////
 //
 ////////////////////////////////////////////////////////////
-- (void) setBackgroundColor:(UIColor *)backgroundColor
-{
-    if (_backgroundColor == backgroundColor) return;
-    
-    _backgroundColor = backgroundColor;
-    self.display.backgroundColor = _backgroundColor;
-}
+//- (void) setBackgroundColor:(UIColor *)backgroundColor
+//{
+//    if (_backgroundColor == backgroundColor) return;
+//    
+//    _backgroundColor = backgroundColor;
+//    self.display.backgroundColor = _backgroundColor;
+//}
 
 ////////////////////////////////////////////////////////////
 //
@@ -266,24 +257,6 @@
     [self updateCurrentValue];
     [self updateDisplay];
 }
-
-////////////////////////////////////////////////////////////
-//
-////////////////////////////////////////////////////////////
-//- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
-//{
-//    if (string.length > 0)
-//    {
-//        [entryField.text appendString:string];
-//    }
-//    else
-//    {
-//        [currentValueString deleteCharactersInRange:NSMakeRange(currentValueString.length-1, 1)];
-//    }
-//    
-//    [self updateDisplay];
-//    return YES;
-//}
 
 /////////////////////////////////////////////////////
 //
@@ -429,7 +402,12 @@
 /////////////////////////////////////////////////////
 - (void) layoutSubviews
 {
+    [super layoutSubviews];
+    
     self.entryField.frame = self.bounds;
-    self.display.frame = self.bounds;
+    CGRect r = self.bounds;
+    r.size.width -= (self.caretWidth + 2 + 5);
+    self.display.frame = r;
+//    self.display.frame = self.bounds;
 }
 @end

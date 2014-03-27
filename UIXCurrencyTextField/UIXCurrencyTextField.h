@@ -20,7 +20,6 @@
 @interface UIXCurrencyTextField : UIView <UITextFieldDelegate>
 
 @property (nonatomic, retain) UIColor* textColor;
-@property (nonatomic, retain) UIColor* backgroundColor;
 @property (nonatomic, retain) UIFont* font;
 @property (nonatomic, assign) CGFloat caretWidth;
 

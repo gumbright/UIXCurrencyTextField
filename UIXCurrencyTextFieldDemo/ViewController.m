@@ -10,8 +10,7 @@
 #import "UIXCurrencyTextField.h"
 
 @interface ViewController ()
-@property (nonatomic, weak) IBOutlet UIXCurrencyTextField* currencyField1;
-
+@property (nonatomic, weak) IBOutlet UIXCurrencyTextField* currencyField;
 @end
 
 @implementation ViewController
@@ -21,7 +20,7 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     
-    self.currencyField1.font = [UIFont systemFontOfSize:36.0];
+    self.currencyField.font = [UIFont systemFontOfSize:36.0];
 }
 
 - (void)didReceiveMemoryWarning

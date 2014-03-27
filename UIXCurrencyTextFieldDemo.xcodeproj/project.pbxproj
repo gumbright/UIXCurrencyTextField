@@ -40,6 +40,7 @@
 		E47DD601174B08C3006F1C83 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ViewController.xib; sourceTree = "<group>"; };
 		E47DD609174B0936006F1C83 /* UIXCurrencyTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIXCurrencyTextField.h; sourceTree = "<group>"; };
 		E47DD60A174B0936006F1C83 /* UIXCurrencyTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIXCurrencyTextField.m; sourceTree = "<group>"; };
+		E4A8BF1218DFEDE1005C0419 /* UIXCurrencyTextField.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = UIXCurrencyTextField.podspec; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +60,7 @@
 		E47DD5D9174B08C3006F1C83 = {
 			isa = PBXGroup;
 			children = (
+				E4A8BF1218DFEDE1005C0419 /* UIXCurrencyTextField.podspec */,
 				E47DD608174B0936006F1C83 /* UIXCurrencyTextField */,
 				E47DD5EB174B08C3006F1C83 /* UIXCurrencyTextFieldDemo */,
 				E47DD5E4174B08C3006F1C83 /* Frameworks */,
