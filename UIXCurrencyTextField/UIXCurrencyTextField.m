@@ -19,6 +19,7 @@ static NSNumberFormatter* gFormatter = nil;
 @property (nonatomic, readonly) NSNumberFormatter* formatter;
 @property (nonatomic, strong) UIView* blinky;
 @property (nonatomic, strong) NSTimer* blinkyTimer;
+@property (nonatomic, strong) UIView* currentInputAccessory;
 @end
 
 @implementation UIXCurrencyTextField
@@ -34,6 +35,7 @@ static NSNumberFormatter* gFormatter = nil;
     self.entryField.delegate = self;
     self.entryField.keyboardType =  UIKeyboardTypeNumberPad;
     self.entryField.hidden = YES;
+    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(editValueChanged:) 
                                                  name:UITextFieldTextDidChangeNotification 
@@ -78,6 +80,35 @@ static NSNumberFormatter* gFormatter = nil;
     return gFormatter;
 }
 
+/////////////////////////////////////////////////////
+//
+/////////////////////////////////////////////////////
+- (void) setupDefaultAccessoryView
+{
+    UIToolbar* v = [[UIToolbar alloc] initWithFrame:CGRectZero];
+    v.barTintColor = [UIColor colorWithWhite:.85 alpha:.5];
+    
+    v.items = @[[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil],
+                [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(donePressed:)]];
+    [v sizeToFit];
+    
+    self.currentInputAccessory = v;
+}
+
+/////////////////////////////////////////////////////
+//
+/////////////////////////////////////////////////////
+- (UIView*) currentInputAccessory
+{
+    if (_currentInputAccessory == nil)
+    {
+        [self setupDefaultAccessoryView];
+    }
+    
+    return _currentInputAccessory;
+}
+
+
 ////////////////////////////////////////////////////////////
 //
 ////////////////////////////////////////////////////////////
@@ -116,6 +147,16 @@ static NSNumberFormatter* gFormatter = nil;
 }
 */
 
+/////////////////////////////////////////////////////
+//
+/////////////////////////////////////////////////////
+- (void) layoutSubviews
+{
+    self.entryField.frame = self.bounds;
+    CGRect r = self.bounds;
+    r.size.width -= (self.caretWidth + 2 + 5);
+    self.display.frame = r;
+}
 #pragma mark UITextFieldDelegate methods
 
 ////////////////////////////////////////////////////////////
@@ -182,30 +223,6 @@ static NSNumberFormatter* gFormatter = nil;
     [self updateDisplay];
 }
 
-
-////////////////////////////////////////////////////////////
-//
-////////////////////////////////////////////////////////////
-//- (void) setTextColor:(UIColor *)textColor
-//{
-//    if (_textColor == textColor) return;
-//    
-//    _textColor = textColor;
-//    self.display.textColor = _textColor;
-//    self.blinky.backgroundColor = _textColor;
-//}
-
-////////////////////////////////////////////////////////////
-//
-////////////////////////////////////////////////////////////
-//- (void) setBackgroundColor:(UIColor *)backgroundColor
-//{
-//    if (_backgroundColor == backgroundColor) return;
-//    
-//    _backgroundColor = backgroundColor;
-//    self.display.backgroundColor = _backgroundColor;
-//}
-
 ////////////////////////////////////////////////////////////
 //
 ////////////////////////////////////////////////////////////
@@ -220,20 +237,48 @@ static NSNumberFormatter* gFormatter = nil;
 /////////////////////////////////////////////////////
 //
 /////////////////////////////////////////////////////
-- (UIView*) fieldInputAccessoryView
+- (UIView*) inputAccessoryView
 {
-    return _entryField.inputAccessoryView;
+    return self.currentInputAccessory;
 }
 
 /////////////////////////////////////////////////////
 //
 /////////////////////////////////////////////////////
-- (void) setFieldInputAccessoryView:(UIView *)inputAccessoryView
+- (void) setInputAccessoryView:(UIView *)inputAccessoryView
 {
-    self.entryField.inputAccessoryView = inputAccessoryView;
+    self.currentInputAccessory = inputAccessoryView;
+}
+
+////////////////////////////////////////////////////////////
+//
+////////////////////////////////////////////////////////////
+- (void) setDecimalValue:(NSDecimalNumber *)decValue
+{
+    NSDecimalNumber* scale = [NSDecimalNumber decimalNumberWithDecimal:[[NSNumber numberWithInt:10] decimalValue]];
+    scale = [scale decimalNumberByRaisingToPower:[self.formatter maximumFractionDigits]];
+    NSDecimalNumber* num = [decValue decimalNumberByMultiplyingBy:scale];
+    
+    self.entryField.text = [num stringValue];
+    [self updateDisplay];
+    
+}
+
+////////////////////////////////////////////////////////////
+//
+////////////////////////////////////////////////////////////
+- (NSDecimalNumber*) decimalValue
+{
+    NSDecimalNumber* num = [NSDecimalNumber decimalNumberWithDecimal:[[NSNumber numberWithInt:[self.entryField.text intValue]] decimalValue]];
+    NSDecimalNumber* scale = [NSDecimalNumber decimalNumberWithDecimal:[[NSNumber numberWithInt:10] decimalValue]];
+    scale = [scale decimalNumberByRaisingToPower:[self.formatter maximumFractionDigits]];
+    num = [num decimalNumberByDividingBy:scale];
+    
+    return num;
 }
 
 
+#pragma mark operational
 ////////////////////////////////////////////////////////////
 //
 ////////////////////////////////////////////////////////////
@@ -304,6 +349,7 @@ static NSNumberFormatter* gFormatter = nil;
 {
     if (!self.entryField.isFirstResponder)
     {
+        self.entryField.inputAccessoryView = self.currentInputAccessory;
         [self.entryField becomeFirstResponder];
     }
     self.blinky.alpha = 0.0;
@@ -315,8 +361,12 @@ static NSNumberFormatter* gFormatter = nil;
 ////////////////////////////////////////////////////////////
 - (void) handleResignFirstResponder
 {
+    NSLog(@"%@\n\n%@",self, self.entryField);
+    
     if (self.entryField.isFirstResponder)
     {
+        [self.blinkyTimer invalidate];
+        self.blinky.hidden = YES;
         [self.entryField resignFirstResponder];
     }
     
@@ -327,9 +377,10 @@ static NSNumberFormatter* gFormatter = nil;
 ////////////////////////////////////////////////////////////
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
-    [self.blinkyTimer invalidate];
-    self.blinky.hidden = YES;
-    [super resignFirstResponder];
+//    [self.blinkyTimer invalidate];
+//    self.blinky.hidden = YES;
+//    [super resignFirstResponder];
+    [self handleResignFirstResponder];
 }
 
 ////////////////////////////////////////////////////////////
@@ -338,33 +389,6 @@ static NSNumberFormatter* gFormatter = nil;
 - (void) tapped: (UIGestureRecognizer*) gr
 {
     [self handleBecomeFirstResponder];
-}
-
-////////////////////////////////////////////////////////////
-//
-////////////////////////////////////////////////////////////
-- (void) setDecimalValue:(NSDecimalNumber *)decValue
-{
-    NSDecimalNumber* scale = [NSDecimalNumber decimalNumberWithDecimal:[[NSNumber numberWithInt:10] decimalValue]];
-    scale = [scale decimalNumberByRaisingToPower:[self.formatter maximumFractionDigits]];
-    NSDecimalNumber* num = [decValue decimalNumberByMultiplyingBy:scale];
-    
-    self.entryField.text = [num stringValue];
-    [self updateDisplay];
-
-}
-
-////////////////////////////////////////////////////////////
-//
-////////////////////////////////////////////////////////////
-- (NSDecimalNumber*) decimalValue
-{
-    NSDecimalNumber* num = [NSDecimalNumber decimalNumberWithDecimal:[[NSNumber numberWithInt:[self.entryField.text intValue]] decimalValue]];
-    NSDecimalNumber* scale = [NSDecimalNumber decimalNumberWithDecimal:[[NSNumber numberWithInt:10] decimalValue]];
-    scale = [scale decimalNumberByRaisingToPower:[self.formatter maximumFractionDigits]];
-    num = [num decimalNumberByDividingBy:scale];
-    
-    return num;
 }
 
 ////////////////////////////////////////////////////////////
@@ -392,22 +416,26 @@ static NSNumberFormatter* gFormatter = nil;
 /////////////////////////////////////////////////////
 //
 /////////////////////////////////////////////////////
-- (void) layoutIfNeeded
+- (void) donePressed:(id) sender
 {
-    [super layoutIfNeeded];
+    [self endEditing:YES];
 }
 
 /////////////////////////////////////////////////////
 //
 /////////////////////////////////////////////////////
-- (void) layoutSubviews
+- (BOOL) becomeFirstResponder
 {
-    [super layoutSubviews];
-    
-    self.entryField.frame = self.bounds;
-    CGRect r = self.bounds;
-    r.size.width -= (self.caretWidth + 2 + 5);
-    self.display.frame = r;
-//    self.display.frame = self.bounds;
+    [self handleBecomeFirstResponder];
+    return YES;
+}
+
+/////////////////////////////////////////////////////
+//
+/////////////////////////////////////////////////////
+- (BOOL) resignFirstResponder
+{
+    [self handleResignFirstResponder];
+    return YES;
 }
 @end

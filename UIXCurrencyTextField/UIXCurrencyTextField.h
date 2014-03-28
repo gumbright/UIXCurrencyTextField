@@ -23,9 +23,8 @@
 @property (nonatomic, retain) UIFont* font;
 @property (nonatomic, assign) CGFloat caretWidth;
 
-@property (nonatomic, strong) UIView* fieldInputAccessoryView;
+@property (nonatomic, strong) UIView* inputAccessoryView;
 
-//@property (nonatomic, assign) NSDecimalNumber* value;
 @property (nonatomic, assign) float value;
 @property (unsafe_unretained, nonatomic, readonly) NSDecimalNumber* decimalValue;
 @property (nonatomic, unsafe_unretained) NSObject<UIXCurrencyTextFieldDelegate>* delegate;
@@ -42,5 +41,6 @@
 
 
 - (NSDecimalNumber*) floatToAppropriateNSDecimalNumber:(float) f;
+
 
 @end
