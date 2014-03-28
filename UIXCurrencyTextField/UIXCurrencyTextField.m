@@ -181,6 +181,11 @@ static NSNumberFormatter* gFormatter = nil;
     {
         result = [self.delegate currencyTextFieldShouldEndEditing:self];
     }
+    
+    if (result)
+    {
+        [self handleResignFirstResponder];
+    }
     return result;
 }
 
@@ -375,20 +380,9 @@ static NSNumberFormatter* gFormatter = nil;
 ////////////////////////////////////////////////////////////
 //
 ////////////////////////////////////////////////////////////
-- (void)textFieldDidEndEditing:(UITextField *)textField
-{
-//    [self.blinkyTimer invalidate];
-//    self.blinky.hidden = YES;
-//    [super resignFirstResponder];
-    [self handleResignFirstResponder];
-}
-
-////////////////////////////////////////////////////////////
-//
-////////////////////////////////////////////////////////////
 - (void) tapped: (UIGestureRecognizer*) gr
 {
-    [self handleBecomeFirstResponder];
+    [self becomeFirstResponder];
 }
 
 ////////////////////////////////////////////////////////////

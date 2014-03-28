@@ -59,4 +59,24 @@
 {
     [self.currencyField resignFirstResponder];
 }
+
+/////////////////////////////////////////////////////
+//
+/////////////////////////////////////////////////////
+- (void) plus99:(id) sender
+{
+    float val = self.currencyField2.value;
+    val += 0.99;
+    self.currencyField2.value = val;
+}
+
+/////////////////////////////////////////////////////
+//
+/////////////////////////////////////////////////////
+- (void) minus99:(id) sender
+{
+    float val = self.currencyField2.value;
+    val -= 0.99;
+    self.currencyField2.value = val;
+}
 @end
