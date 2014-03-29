@@ -19,8 +19,8 @@
 
 @interface UIXCurrencyTextField : UIView <UITextFieldDelegate>
 
-@property (nonatomic, retain) UIColor* textColor;
-@property (nonatomic, retain) UIFont* font;
+@property (nonatomic, readwrite) UIColor* textColor;
+@property (nonatomic, readwrite) UIFont* font;
 @property (nonatomic, assign) CGFloat caretWidth;
 
 @property (nonatomic, strong) UIView* inputAccessoryView;
@@ -28,18 +28,10 @@
 @property (nonatomic, assign) float value;
 @property (unsafe_unretained, nonatomic, readonly) NSDecimalNumber* decimalValue;
 @property (nonatomic, unsafe_unretained) NSObject<UIXCurrencyTextFieldDelegate>* delegate;
-//font
-//textcolor
-//background
-//alignment
-//force locale?
 
 - (void) setDecimalValue:(NSDecimalNumber *)decimalValue;
 
-- (void) handleBecomeFirstResponder;
-- (void) handleResignFirstResponder;
-
-
+//utility
 - (NSDecimalNumber*) floatToAppropriateNSDecimalNumber:(float) f;
 
 

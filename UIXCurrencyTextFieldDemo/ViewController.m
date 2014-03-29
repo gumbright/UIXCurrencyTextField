@@ -36,6 +36,9 @@
     [v sizeToFit];
     
     self.currencyField2.inputAccessoryView = v;
+    
+    self.currencyField2.textColor = [UIColor redColor];
+    self.currencyField2.font = [UIFont fontWithName:@"Georgia" size:12.0];
 }
 
 - (void)didReceiveMemoryWarning
