@@ -3,7 +3,7 @@
 [![Version](http://cocoapod-badges.herokuapp.com/v/UIXCurrencyTextField/badge.png)](http://cocoadocs.org/docsets/UIXCurrencyTextField)
 [![Platform](http://cocoapod-badges.herokuapp.com/p/UIXCurrencyTextField/badge.png)](http://cocoadocs.org/docsets/UIXCurrencyTextField)
 
-![screenshot](http://www.umbrightconsulting.com/cocoapods/uixcurrencytextfield.png "UIXCurrencyTextField screen shot")
+![screenshot](http://www.umbrightconsulting.com/cocoapods/uixcurrencytextfield/screenshot1.png "UIXCurrencyTextField screen shot")
 ## Usage
 
 To run the example project; clone the repo, and run `pod install` from the Example directory first.
