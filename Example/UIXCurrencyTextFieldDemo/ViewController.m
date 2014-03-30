@@ -2,8 +2,8 @@
 //  ViewController.m
 //  UIXCurrencyTextFieldDemo
 //
-//  Created by Guy Umbright on 5/20/13.
-//  Copyright (c) 2013 Umbright Consulting, Inc. All rights reserved.
+//  Created by Guy Umbright on 8/23/11.
+//  Copyright 2014 Umbright Consulting, Inc. All rights reserved.
 //
 
 #import "ViewController.h"

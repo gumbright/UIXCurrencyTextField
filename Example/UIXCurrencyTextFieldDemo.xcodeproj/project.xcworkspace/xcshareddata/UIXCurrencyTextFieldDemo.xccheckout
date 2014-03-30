@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>AD0D1218-C841-41B8-828D-38B6DE44E3CB</string>
+	<key>IDESourceControlProjectName</key>
+	<string>UIXCurrencyTextFieldDemo</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>3864536A-0EB2-4C3B-9CAF-3F110E6052FF</key>
+		<string>ssh://github.com/gumbright/UIXCurrencyTextField.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>UIXCurrencyTextFieldDemo.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>3864536A-0EB2-4C3B-9CAF-3F110E6052FF</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>ssh://github.com/gumbright/UIXCurrencyTextField.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>3864536A-0EB2-4C3B-9CAF-3F110E6052FF</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>3864536A-0EB2-4C3B-9CAF-3F110E6052FF</string>
+			<key>IDESourceControlWCCName</key>
+			<string>UIXCurrencyTextField</string>
+		</dict>
+	</array>
+</dict>
+</plist>
