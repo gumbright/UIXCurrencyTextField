@@ -5,18 +5,17 @@ Pod::Spec.new do |spec|
   spec.homepage	    = 'https://github.com/gumbright/UIXCurrencyTextField'
   spec.authors      =  {'Guy Umbright' => 'guy@umbrightconsulting.com'} 
   spec.source       =  {:git => 'https://github.com/gumbright/UIXCurrencyTextField.git'}
-  spec.source_files =  'UIXCurrencyTextField/*.{h,m}'
   spec.requires_arc = true
 
-  s.summary          = "An ATM like currency entry view"
-  s.screenshots      = "www.umbrightconsulting.com/cocoapods/uixcurrencytextfield/screenshot1.png"
+  spec.summary          = "An ATM like currency entry view"
+  spec.screenshots      = "www.umbrightconsulting.com/cocoapods/uixcurrencytextfield/screenshot1.png"
 
-  s.platform     = :ios, '7.0'
-  s.ios.deployment_target = '7.0'
+  spec.platform     = :ios, '7.0'
+  spec.ios.deployment_target = '7.0'
 
-  s.source_files = 'Classes'
+  spec.source_files = 'Classes/**/*.{h,m}'
 
-  s.ios.exclude_files = 'Classes/osx'
-  s.osx.exclude_files = 'Classes/ios'
+  spec.ios.exclude_files = 'Classes/osx'
+  spec.osx.exclude_files = 'Classes/ios'
 
 end
