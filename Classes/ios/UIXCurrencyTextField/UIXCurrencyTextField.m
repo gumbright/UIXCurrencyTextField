@@ -250,6 +250,7 @@ static NSNumberFormatter* gFormatter = nil;
 - (void) setTextColor:(UIColor *)textColor
 {
     self.display.textColor = textColor;
+    self.blinky.backgroundColor = textColor;
 }
 
 /////////////////////////////////////////////////////
