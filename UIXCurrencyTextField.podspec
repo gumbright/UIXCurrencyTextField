@@ -4,7 +4,7 @@ Pod::Spec.new do |spec|
   spec.license      = 'MIT'
   spec.homepage	    = 'https://github.com/gumbright/UIXCurrencyTextField'
   spec.authors      =  {'Guy Umbright' => 'guy@umbrightconsulting.com'} 
-  spec.source       =  {:git => 'https://github.com/gumbright/UIXCurrencyTextField.git'}
+  spec.source       =  {:git => 'https://github.com/gumbright/UIXCurrencyTextField.git',:tag => 'v1.0.0'}
   spec.requires_arc = true
 
   spec.summary          = "An ATM like currency entry view"
