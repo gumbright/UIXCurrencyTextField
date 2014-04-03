@@ -174,6 +174,18 @@ static NSNumberFormatter* gFormatter = nil;
 /////////////////////////////////////////////////////
 //
 /////////////////////////////////////////////////////
+- (void) textFieldDidEndEditing:(UITextField *)textField
+{
+    if ([self.delegate respondsToSelector:@selector(currencyTextFieldDidEndEditing:)])
+    {
+        [self.delegate currencyTextFieldDidEndEditing:self];
+    }
+    
+}
+
+/////////////////////////////////////////////////////
+//
+/////////////////////////////////////////////////////
 - (BOOL)textFieldShouldEndEditing:(UITextField *)textField
 {
     BOOL result = YES;

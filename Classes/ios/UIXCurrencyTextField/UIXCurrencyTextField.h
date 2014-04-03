@@ -12,8 +12,12 @@
 
 @protocol UIXCurrencyTextFieldDelegate
 
+@optional
+
 //return YES if editing should stop
-- (BOOL)currencyTextFieldShouldEndEditing:(UIXCurrencyTextField *)currencyTextField;
+- (BOOL) currencyTextFieldShouldEndEditing:(UIXCurrencyTextField *)currencyTextField;
+
+- (void) currencyTextFieldDidEndEditing:(UIXCurrencyTextField *)currencyTextField;
 
 @end
 
