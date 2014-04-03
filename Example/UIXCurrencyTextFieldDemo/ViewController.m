@@ -7,7 +7,6 @@
 //
 
 #import "ViewController.h"
-#import "UIXCurrencyTextField.h"
 
 @interface ViewController ()
 @property (nonatomic, weak) IBOutlet UIXCurrencyTextField* currencyField;
@@ -22,6 +21,7 @@
 	// Do any additional setup after loading the view, typically from a nib.
     
     self.currencyField.font = [UIFont systemFontOfSize:36.0];
+    self.currencyField.delegate = self;
     
     //accessory for 2nd field
     UIToolbar* v = [[UIToolbar alloc] initWithFrame:CGRectZero];
@@ -39,6 +39,7 @@
     
     self.currencyField2.textColor = [UIColor redColor];
     self.currencyField2.font = [UIFont fontWithName:@"Georgia" size:12.0];
+    self.currencyField2.delegate = self;
 }
 
 - (void)didReceiveMemoryWarning
@@ -81,5 +82,22 @@
     float val = self.currencyField2.value;
     val -= 0.99;
     self.currencyField2.value = val;
+}
+
+#pragma mark UIXCurrencyTextFieldDelegate
+/////////////////////////////////////////////////////
+//
+/////////////////////////////////////////////////////
+- (BOOL) currencyTextFieldShouldEndEditing:(UIXCurrencyTextField*) currencyField
+{
+    return YES;
+}
+
+/////////////////////////////////////////////////////
+//
+/////////////////////////////////////////////////////
+- (void) currencyTextFieldDidEndEditing:(UIXCurrencyTextField *)currencyTextField
+{
+    NSLog(@"did end editing");
 }
 @end
