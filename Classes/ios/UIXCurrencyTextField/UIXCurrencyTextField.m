@@ -6,9 +6,12 @@
 //  Copyright 2014 Umbright Consulting, Inc. All rights reserved.
 //
 
-static NSNumberFormatter* gFormatter = nil;
-
 #import "UIXCurrencyTextField.h"
+
+const NSUInteger kMaxLengthDefault = 9;
+
+static NSNumberFormatter* gFormatter = nil;
+NSString* UIXCurrencyTextFieldDonePressedNotification = @"UIXCurrencyTextFieldDonePressedNotification";
 
 @interface UIXCurrencyTextField ()
 @property (nonatomic, assign) float currentValue;
@@ -61,6 +64,8 @@ static NSNumberFormatter* gFormatter = nil;
     self.blinky.backgroundColor = self.display.textColor;
     self.blinky.hidden = 1.0;
     [self addSubview:self.blinky];
+    
+    self.maxLength = kMaxLengthDefault;
     
     self.display.text = [self.formatter stringFromNumber:[NSNumber numberWithFloat:0.0]];
     [self setNeedsDisplay];
@@ -201,6 +206,25 @@ static NSNumberFormatter* gFormatter = nil;
     return result;
 }
 
+/////////////////////////////////////////////////////
+//
+/////////////////////////////////////////////////////
+- (BOOL) textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    BOOL result = YES;
+    
+    result = (textField.text.length - range.length + string.length) <= self.maxLength;
+    
+    if (result)
+    {
+        NSCharacterSet* goodChars = [[NSCharacterSet decimalDigitCharacterSet] invertedSet];
+        NSRange resultRange = [string rangeOfCharacterFromSet:goodChars];
+        result = (resultRange.location == NSNotFound);
+    }
+    
+    return result;
+}
+
 #pragma mark attributes
 
 ////////////////////////////////////////////////////////////
@@ -316,6 +340,13 @@ static NSNumberFormatter* gFormatter = nil;
     return num;
 }
 
+/////////////////////////////////////////////////////
+//
+/////////////////////////////////////////////////////
+- (void) setMaxLength:(NSUInteger)maxLength
+{
+    _maxLength = (maxLength <= kMaxLengthDefault) ? : kMaxLengthDefault;
+}
 
 #pragma mark operational
 ////////////////////////////////////////////////////////////
@@ -447,6 +478,7 @@ static NSNumberFormatter* gFormatter = nil;
 - (void) donePressed:(id) sender
 {
     [self endEditing:YES];
+    [[NSNotificationCenter defaultCenter] postNotificationName:UIXCurrencyTextFieldDonePressedNotification object:self];
 }
 
 /////////////////////////////////////////////////////

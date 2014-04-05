@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+extern NSString* UIXCurrencyTextFieldDonePressedNotification;
+
 @class UIXCurrencyTextField;
 
 @protocol UIXCurrencyTextFieldDelegate
@@ -26,6 +28,8 @@
 @property (nonatomic, readwrite) UIColor* textColor;
 @property (nonatomic, readwrite) UIFont* font;
 @property (nonatomic, assign) CGFloat caretWidth;
+
+@property (nonatomic, assign) NSUInteger maxLength; //
 
 @property (nonatomic, strong) UIView* inputAccessoryView;
 
