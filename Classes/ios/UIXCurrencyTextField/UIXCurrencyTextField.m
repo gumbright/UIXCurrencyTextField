@@ -23,6 +23,8 @@ NSString* UIXCurrencyTextFieldDonePressedNotification = @"UIXCurrencyTextFieldDo
 @property (nonatomic, strong) UIView* blinky;
 @property (nonatomic, strong) NSTimer* blinkyTimer;
 @property (nonatomic, strong) UIView* currentInputAccessory;
+
+@property (nonatomic, strong) NSCharacterSet* forbiddenCharset;
 @end
 
 @implementation UIXCurrencyTextField
@@ -66,6 +68,7 @@ NSString* UIXCurrencyTextFieldDonePressedNotification = @"UIXCurrencyTextFieldDo
     [self addSubview:self.blinky];
     
     self.maxLength = kMaxLengthDefault;
+    self.forbiddenCharset = [[NSCharacterSet decimalDigitCharacterSet] invertedSet];
     
     self.display.text = [self.formatter stringFromNumber:[NSNumber numberWithFloat:0.0]];
     [self setNeedsDisplay];
@@ -217,8 +220,7 @@ NSString* UIXCurrencyTextFieldDonePressedNotification = @"UIXCurrencyTextFieldDo
     
     if (result)
     {
-        NSCharacterSet* goodChars = [[NSCharacterSet decimalDigitCharacterSet] invertedSet];
-        NSRange resultRange = [string rangeOfCharacterFromSet:goodChars];
+        NSRange resultRange = [string rangeOfCharacterFromSet:self.forbiddenCharset];
         result = (resultRange.location == NSNotFound);
     }
     
