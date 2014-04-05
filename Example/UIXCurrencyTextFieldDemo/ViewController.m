@@ -40,6 +40,7 @@
     self.currencyField2.textColor = [UIColor redColor];
     self.currencyField2.font = [UIFont fontWithName:@"Georgia" size:12.0];
     self.currencyField2.delegate = self;
+    self.currencyField2.maxLength = 6;
 }
 
 - (void)didReceiveMemoryWarning
