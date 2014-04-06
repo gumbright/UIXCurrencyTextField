@@ -18,7 +18,7 @@ extern NSString* UIXCurrencyTextFieldDonePressedNotification;
 
 //return YES if editing should stop
 - (BOOL) currencyTextFieldShouldEndEditing:(UIXCurrencyTextField *)currencyTextField;
-
+- (void) currencyTextFieldDidChange:(UIXCurrencyTextField*) currencyTextField;
 - (void) currencyTextFieldDidEndEditing:(UIXCurrencyTextField *)currencyTextField;
 
 @end

@@ -8,7 +8,7 @@
 
 #import "UIXCurrencyTextField.h"
 
-const NSUInteger kMaxLengthDefault = 9;
+const NSUInteger kUIXCurrencyTextFieldMaxLengthDefault = 9;
 
 static NSNumberFormatter* gFormatter = nil;
 NSString* UIXCurrencyTextFieldDonePressedNotification = @"UIXCurrencyTextFieldDonePressedNotification";
@@ -67,10 +67,11 @@ NSString* UIXCurrencyTextFieldDonePressedNotification = @"UIXCurrencyTextFieldDo
     self.blinky.hidden = 1.0;
     [self addSubview:self.blinky];
     
-    self.maxLength = kMaxLengthDefault;
+    self.maxLength = kUIXCurrencyTextFieldMaxLengthDefault;
     self.forbiddenCharset = [[NSCharacterSet decimalDigitCharacterSet] invertedSet];
     
     self.display.text = [self.formatter stringFromNumber:[NSNumber numberWithFloat:0.0]];
+    
     [self setNeedsDisplay];
 }
 
@@ -216,7 +217,10 @@ NSString* UIXCurrencyTextFieldDonePressedNotification = @"UIXCurrencyTextFieldDo
 {
     BOOL result = YES;
     
-    result = (textField.text.length - range.length + string.length) <= self.maxLength;
+    NSInteger n = textField.text.length - range.length;
+    n += string.length;
+    
+    result = (n <= self.maxLength);
     
     if (result)
     {
@@ -347,7 +351,7 @@ NSString* UIXCurrencyTextFieldDonePressedNotification = @"UIXCurrencyTextFieldDo
 /////////////////////////////////////////////////////
 - (void) setMaxLength:(NSUInteger)maxLength
 {
-    _maxLength = (maxLength <= kMaxLengthDefault) ? : kMaxLengthDefault;
+    _maxLength = (maxLength <= kUIXCurrencyTextFieldMaxLengthDefault) ? maxLength : kUIXCurrencyTextFieldMaxLengthDefault;
 }
 
 #pragma mark operational
@@ -373,6 +377,11 @@ NSString* UIXCurrencyTextFieldDonePressedNotification = @"UIXCurrencyTextFieldDo
 {
     [self updateCurrentValue];
     [self updateDisplay];
+
+    if ([self.delegate respondsToSelector:@selector(currencyTextFieldDidChange:)])
+    {
+        [self.delegate currencyTextFieldDidChange:self];
+    }
 }
 
 /////////////////////////////////////////////////////
