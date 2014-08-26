@@ -5,7 +5,7 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>AD0D1218-C841-41B8-828D-38B6DE44E3CB</string>
+	<string>D18AD4ED-2B6F-4E79-B5A3-001CE90A61B8</string>
 	<key>IDESourceControlProjectName</key>
 	<string>UIXCurrencyTextFieldDemo</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
@@ -14,11 +14,11 @@
 		<string>ssh://github.com/gumbright/UIXCurrencyTextField.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>UIXCurrencyTextFieldDemo.xcodeproj/project.xcworkspace</string>
+	<string>Example/UIXCurrencyTextFieldDemo.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>3864536A-0EB2-4C3B-9CAF-3F110E6052FF</key>
-		<string>../..</string>
+		<string>../../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>ssh://github.com/gumbright/UIXCurrencyTextField.git</string>
