@@ -62,11 +62,6 @@ NSString* UIXCurrencyTextFieldDonePressedNotification = @"UIXCurrencyTextFieldDo
     gr.numberOfTouchesRequired = 1;
     [self.display addGestureRecognizer:gr];
     
-    self.blinky = [[UIView alloc] initWithFrame:CGRectMake(self.bounds.size.width-10, 5, self.caretWidth, self.bounds.size.height-10)];
-    self.blinky.backgroundColor = self.display.textColor;
-    self.blinky.hidden = 1.0;
-    [self addSubview:self.blinky];
-    
     self.maxLength = kUIXCurrencyTextFieldMaxLengthDefault;
     self.forbiddenCharset = [[NSCharacterSet decimalDigitCharacterSet] invertedSet];
     
@@ -422,6 +417,18 @@ NSString* UIXCurrencyTextFieldDonePressedNotification = @"UIXCurrencyTextFieldDo
     }
 }
 
+/////////////////////////////////////////////////////
+//
+/////////////////////////////////////////////////////
+- (void) addBlinky
+{
+    self.blinky = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.caretWidth, self.display.font.lineHeight)];
+    self.blinky.center = CGPointMake(self.bounds.size.width-8, self.display.center.y);
+    self.blinky.alpha = 0.0;
+    self.blinky.hidden = NO;
+    self.blinky.backgroundColor = self.display.textColor;
+    [self addSubview:self.blinky];
+}
 
 ////////////////////////////////////////////////////////////
 //
@@ -433,8 +440,8 @@ NSString* UIXCurrencyTextFieldDonePressedNotification = @"UIXCurrencyTextFieldDo
         self.entryField.inputAccessoryView = self.currentInputAccessory;
         [self.entryField becomeFirstResponder];
     }
-    self.blinky.alpha = 0.0;
-    self.blinky.hidden = NO;
+    
+    [self addBlinky];
 }
 
 ////////////////////////////////////////////////////////////

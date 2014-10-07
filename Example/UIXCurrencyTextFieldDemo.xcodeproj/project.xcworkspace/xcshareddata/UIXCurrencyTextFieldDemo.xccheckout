@@ -10,29 +10,29 @@
 	<string>UIXCurrencyTextFieldDemo</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>3864536A-0EB2-4C3B-9CAF-3F110E6052FF</key>
+		<key>2A2F39609DA48F5970638D8273A6E47CDA15C813</key>
 		<string>ssh://github.com/gumbright/UIXCurrencyTextField.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>Example/UIXCurrencyTextFieldDemo.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>3864536A-0EB2-4C3B-9CAF-3F110E6052FF</key>
+		<key>2A2F39609DA48F5970638D8273A6E47CDA15C813</key>
 		<string>../../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>ssh://github.com/gumbright/UIXCurrencyTextField.git</string>
 	<key>IDESourceControlProjectVersion</key>
-	<integer>110</integer>
+	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>3864536A-0EB2-4C3B-9CAF-3F110E6052FF</string>
+	<string>2A2F39609DA48F5970638D8273A6E47CDA15C813</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>3864536A-0EB2-4C3B-9CAF-3F110E6052FF</string>
+			<string>2A2F39609DA48F5970638D8273A6E47CDA15C813</string>
 			<key>IDESourceControlWCCName</key>
 			<string>UIXCurrencyTextField</string>
 		</dict>
